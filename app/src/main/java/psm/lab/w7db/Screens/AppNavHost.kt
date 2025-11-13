@@ -31,6 +31,9 @@ fun AppNavHost() {
                 composable(route = Screens.Page2.name) {
                     Page2(navController)
                 }
+                composable(route = Screens.Page3.name) {
+                    Page3(navController)
+                }
             }
         }
     )

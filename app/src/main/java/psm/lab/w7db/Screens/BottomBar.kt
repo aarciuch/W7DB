@@ -3,6 +3,7 @@ package psm.lab.w7db.Screens
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -25,6 +26,12 @@ fun BottomBar(navController: NavController) {
             onClick = {navController.navigate(Screens.Page2.name)},
             icon = { Icon(Icons.Default.Add, Screens.Page2.name) },
             label = {Text("Dodawanie")}
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {navController.navigate(Screens.Page3.name)},
+            icon = { Icon(Icons.Default.Lock, Screens.Page3.name) },
+            label = {Text("Plik")}
         )
     }
 }
