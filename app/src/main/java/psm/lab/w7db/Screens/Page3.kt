@@ -43,10 +43,12 @@ import java.io.File
 @Composable
 fun Page3(navController: NavController, viewModel : DbVm = koinViewModel()) {
     var lista = viewModel.personList.collectAsState().value
+
     val context = LocalContext.current
 
     val photoUri1 by viewModel.photoUri1.collectAsState()
     val photoBitmap by viewModel.photoBitmap.collectAsState()
+
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -125,7 +127,6 @@ fun Page3(navController: NavController, viewModel : DbVm = koinViewModel()) {
                 Text(text = lista[index])
             }
         }
-
         Text("Zdjęcia",
             modifier = Modifier
                 .fillMaxWidth()
@@ -252,4 +253,5 @@ fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
         BitmapFactory.decodeStream(inputStream)
     }
 }
+
 
