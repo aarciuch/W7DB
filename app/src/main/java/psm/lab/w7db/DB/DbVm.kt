@@ -1,12 +1,11 @@
 package psm.lab.w7db.DB
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +19,15 @@ class DbVm(private val repository: PersonRepository, app : Application) : Androi
     val PersonsCount : Flow<Int> = repository.getCount()
     private var _personsList  = MutableStateFlow<List<String>>(emptyList())
     var personList : StateFlow<List<String>> = _personsList
+
+
+    private val _photoUri1 = MutableStateFlow<Uri?>(null)
+    val photoUri1: StateFlow<Uri?> = _photoUri1
+
+    private var _photoBitmap = MutableStateFlow<Bitmap?>(null)
+    val photoBitmap: StateFlow<Bitmap?> = _photoBitmap
+
+
 
     fun insertPerson(person: Person) {
         viewModelScope.launch {
@@ -63,4 +71,41 @@ class DbVm(private val repository: PersonRepository, app : Application) : Androi
             repository.saveToFilePublic(uri, line)
         }
     }
+
+    fun readFromFilePublic(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val fileContent = repository.readFromFilePublic(uri)
+            _personsList.value = fileContent
+        }
+    }
+
+
+    fun onPhotoCaptured(uri: Uri) {
+        _photoUri1.value = uri
+    }
+
+    fun onPhotoCaptured2(bitmap: Bitmap) {
+        _photoBitmap.value = bitmap
+    }
+
+    fun saveImage(uri: Uri) {
+        viewModelScope.launch {
+            photoBitmap.value?.let { bitmap ->
+                repository.writeImageToUri(uri, bitmap)
+            }
+        }
+
+    }
+
+    fun clearPhotoBitmap() {
+        _photoBitmap.value = null
+    }
+
+    fun loadImage(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val bitmap = repository.readImageFromUri(uri)
+            _photoBitmap.value = bitmap
+        }
+    }
+
 }
