@@ -243,8 +243,7 @@ fun Page3(navController: NavController, viewModel : DbVm = koinViewModel()) {
                 modifier = Modifier.size(250.dp),
                 contentScale = ContentScale.Crop
             )
-        } ?: Text("Brak zdjęcia")
-
+        } ?: Text("Nie ma zdjęcia")
     }
 }
 
