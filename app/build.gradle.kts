@@ -77,4 +77,6 @@ dependencies {
 
     // --- Lifecycle (dla ViewModel w Compose) ---
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
+
+
 }

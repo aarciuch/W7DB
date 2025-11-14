@@ -1,6 +1,8 @@
 package psm.lab.w7db.DB
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
@@ -10,8 +12,6 @@ import kotlinx.coroutines.flow.first
 import java.io.File
 
 class PersonRepository(private val dao: PersonDao, private val context: Context) {
-
-    private lateinit var saveFileLauncher: ActivityResultLauncher<String>
 
     fun getPersons(): Flow<List<Person>> = dao.getAllPersons()
     suspend fun addPerson(person: Person) = dao.insert(person = person)
@@ -35,9 +35,31 @@ class PersonRepository(private val dao: PersonDao, private val context: Context)
     }
 
     fun saveToFilePublic(uri: Uri, line: String) {
-        context.contentResolver.openOutputStream(uri)?.use {output ->
+        context.contentResolver.openOutputStream(uri)?.use { output ->
+            Log.i("FILE2", line)
             output.write(line.toByteArray())
         }
     }
+
+    fun readFromFilePublic(uri: Uri) : List<String>{
+        var content : List<String> = emptyList()
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            content = input.bufferedReader().readLines()
+        }
+        return content
+    }
+
+    fun writeImageToUri(uri: Uri, bitmap: Bitmap) {
+        context.contentResolver.openOutputStream(uri)?.use { output ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+        }
+    }
+
+    fun readImageFromUri(uri: Uri): Bitmap? {
+        return context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            BitmapFactory.decodeStream(inputStream)
+        }
+    }
+
 
 }
