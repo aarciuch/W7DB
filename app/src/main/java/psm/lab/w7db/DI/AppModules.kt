@@ -1,6 +1,7 @@
 package psm.lab.w7db.DI
 
 import androidx.room.Room
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -18,9 +19,9 @@ val appModules = module {
     single { get<PersonDB>().getPersonDao() }
 
     //Repository z single
-    //single { PersonRepository(get()) }
+    single { PersonRepository(get(), androidContext()) }
 
     //Repository z singleOf bo ma prosty konstruktor ze znanymi parametrami
-    singleOf(::PersonRepository)
+    //singleOf(::PersonRepository)
     viewModelOf(::DbVm)
 }

@@ -17,12 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import org.koin.compose.viewmodel.koinActivityViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import psm.lab.w7db.DB.DbVm
 import psm.lab.w7db.DB.Person
 
 @Composable
-fun Page2(navController: NavController, viewModel : DbVm = koinActivityViewModel()) {
+fun Page2(navController: NavController, viewModel : DbVm = koinViewModel()) {
     var description by remember { mutableStateOf("") }
 
     Column(

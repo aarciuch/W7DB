@@ -34,10 +34,11 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.koin.compose.viewmodel.koinActivityViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import psm.lab.w7db.DB.DbVm
 
 @Composable
-fun Page1(navController: NavController, viewModel: DbVm = koinActivityViewModel()) {
+fun Page1(navController: NavController, viewModel: DbVm = koinViewModel()) {
     val count by viewModel.PersonsCount.collectAsState(initial = 0)
     val list by viewModel.persons.collectAsState(emptyList())
 
